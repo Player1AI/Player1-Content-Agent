@@ -1,3 +1,9 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+import * as path from "path";
+import { fileURLToPath } from "url";
+
 export function startCountdown(remainingTime: number) {
   const countdown = setInterval(() => {
     remainingTime -= 1000;
@@ -21,4 +27,10 @@ export function startCountdown(remainingTime: number) {
 
 export function getEnvVariables(): Record<string, string | undefined> {
   return { ...process.env };
+}
+
+export function getDirName(){
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = path.dirname(__filename);
+    return __dirname
 }

@@ -1,4 +1,4 @@
-import { getEnvVariables } from "./utils";
+import { getEnvVariables } from "./utils.ts";
 import OpenAI from "openai";
 
 const env = getEnvVariables()

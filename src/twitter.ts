@@ -6,6 +6,8 @@ import * as fs from "fs";
 import { generatePrompt, generateTweetFromPrompt } from "./ai.ts";
 import { generateImageFromText } from "./scenario.ts";
 import { Character } from "./character.ts";
+import { getDirName } from "./utils.ts";
+
 
 
 export async function sendTweet(scraper, tweet, imageUrls) {
@@ -16,7 +18,7 @@ export async function sendTweet(scraper, tweet, imageUrls) {
         method: "GET",
         responseType: "arraybuffer",
       });
-
+      const __dirname = getDirName()
       const tempFilePath = path.join(__dirname, "temp-image.jpg");
       fs.writeFileSync(tempFilePath, response.data);
       return tempFilePath;

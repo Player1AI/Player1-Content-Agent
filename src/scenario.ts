@@ -1,7 +1,7 @@
 import api from "api";
-import { getEnvVariables } from "./utils";
+import { getEnvVariables } from "./utils.ts";
 
-const env = getEnvVariables()
+const env = getEnvVariables();
 const sdk = api("@scenario-api/v1.0#g3z32ym1hiu2im");
 
 const modelId = env.SCENARIO_MODEL_ID;
@@ -87,7 +87,7 @@ export async function generateImageFromText(prompt: string): Promise<string[]> {
             }
           } catch (err) {
             console.error("Error fetching job details:", err);
-            throw new Error("Failed to poll job status.");
+            status = "failed"
           }
         }
 
@@ -100,7 +100,11 @@ export async function generateImageFromText(prompt: string): Promise<string[]> {
           return assetUrls;
         } else {
           console.error("Inference failed!");
-          throw new Error("Inference failed.");
+          retryCount++;
+          console.error(`Error generating image. Attempt ${retryCount} of ${MAX_RETRIES}`);
+          if (retryCount >= MAX_RETRIES) {
+            throw new Error("Max retries reached. Failed to generate image.");
+          }
         }
       };
 
@@ -108,15 +112,5 @@ export async function generateImageFromText(prompt: string): Promise<string[]> {
     }
   } catch (err) {
     console.error("Error generating image:", err);
-    retryCount++;
-    console.error(
-      `Error generating image. Attempt ${retryCount} of ${MAX_RETRIES}:`,
-      err.message
-    );
-
-    if (retryCount >= MAX_RETRIES) {
-      throw new Error("Max retries reached. Failed to generate image.");
-    }
-    throw err;
   }
 }

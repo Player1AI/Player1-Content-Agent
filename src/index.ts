@@ -3,13 +3,12 @@ import { Scraper } from "agent-twitter-client";
 import { Character } from "./character.ts";
 import * as fs from "fs";
 import * as path from "path";
-import { fileURLToPath } from "url";
+import { getDirName } from "./utils.ts";
 import { startCountdown, getEnvVariables } from "./utils.ts";
 import { postNewTweet } from "./twitter.ts";
 
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __dirname = getDirName()
 
 const filePath = path.resolve(__dirname, "../character/character.json");
 const rawData = fs.readFileSync(filePath, "utf8");
