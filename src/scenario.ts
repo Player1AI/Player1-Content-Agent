@@ -71,7 +71,7 @@ export async function generateImageFromText(prompt: string): Promise<string[]> {
         let status: string = "in-progress";
         let images: string[] = [];
 
-        while (status === "in-progress") {
+        while (status === "in-progress" || status === "warming-up") {
           try {
             // Fetch the job details
             const jobDetails: JobDetailsResponse = await sdk.getJobId({
